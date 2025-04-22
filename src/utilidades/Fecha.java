@@ -1,3 +1,4 @@
+package utilidades;
 /**
  * Representa una fecha con día, mes y año.
  * @author
@@ -61,7 +62,7 @@ public class Fecha {
         return dia <= getDiasEnMes(mes, anio);
     }
 
-    private static int getDiasEnMes(int mes, int anio) {
+    public static int getDiasEnMes(int mes, int anio) {
         int[] diasPorMes = {31,28,31, 30,31, 30,31,31, 30,31, 30,31};
         int dias= diasPorMes[mes-1];
         if (mes==2 && esBisiesto(anio)) {
@@ -70,7 +71,7 @@ public class Fecha {
         return dias;
     }
 
-    private static boolean esBisiesto(int anio) {
+    public static boolean esBisiesto(int anio) {
         if ( (anio % 400 == 0) ||
                 ( (anio % 4 == 0) && (anio % 100 != 0) ) )
             return true;
@@ -88,21 +89,22 @@ public class Fecha {
 
 
     /**
-     * Método que calcula el día del año que es una fecha determinadaPor ejemplo el 2/2/2025 es el día 31+2=33 del año
+     * Metodo que calcula el día del año que es una fecha determinadaPor ejemplo el 2/2/2025 es el día 31+2=33 del año
      * @return int número de día del año al que corresponde la fecha
      */
     public int diaDelAnio() {
         int[] diasPorMes = {31,28,31, 30,31, 30,31,31, 30,31, 30,31};
         int diasHastaFecha = 0;
-        for (int i = 1; i <= this.mes; i++) {
+        for (int i = 0; i <= this.mes-1; i++) {
             diasHastaFecha += diasPorMes[i];
         }
-        diasHastaFecha=this.dia;
+        diasHastaFecha+=this.dia;
+        if (esBisiesto() && diasHastaFecha > 59) diasHastaFecha++;
         return diasHastaFecha;
     }
 
     /**
-     * Método que calucla si la fecha implicita del método es posterior a la pasada por parámetro o no
+     * Metodo que calucla si la fecha implicita del metodo es posterior a la pasada por parámetro o no
      * @param otraFecha
      * @return
      */
@@ -114,8 +116,6 @@ public class Fecha {
         } else {
             return false;
         }
-
-
     }
 
 
